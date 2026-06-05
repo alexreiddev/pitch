@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pakida — Partnership Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1b1f17;
+    --ink-soft:#3a4036;
+    --muted:#6b7264;
+    --sage:#5f7d63;
+    --sage-deep:#46603f;
+    --gold:#c69a32;
+    --gold-soft:#d4a843;
+    --paper:#f6f4ec;
+    --card:#fffdf6;
+    --line:#d9d4c4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:#e7e3d6;
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding:32px 16px;
+  }
+  .sheet{
+    width:210mm;
+    max-width:100%;
+    margin:0 auto;
+    background:var(--paper);
+    padding:18mm 16mm 14mm;
+    box-shadow:0 18px 50px rgba(0,0,0,.22);
+    position:relative;
+  }
+  .sheet::before{
+    content:"";
+    position:absolute;left:0;top:0;height:6px;width:100%;
+    background:linear-gradient(90deg,var(--sage-deep),var(--sage) 45%,var(--gold) 100%);
+  }
+
+  /* Header */
+  header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1.5px solid var(--line);padding-bottom:14px;margin-bottom:18px;}
+  .wordmark{font-family:'DM Sans',sans-serif;font-weight:700;font-size:34px;color:var(--sage);letter-spacing:-1px;line-height:1;}
+  .wordmark .dot{color:var(--gold);}
+  .subline{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-top:6px;}
+  .doc-tag{text-align:right;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;line-height:1.8;}
+  .doc-tag strong{color:var(--ink);display:block;font-size:11px;}
+
+  h1.thesis{font-family:'Playfair Display',serif;font-weight:800;font-size:23px;line-height:1.25;color:var(--ink);margin-bottom:10px;letter-spacing:-.3px;}
+  .lede{font-size:12.5px;color:var(--ink-soft);max-width:165mm;margin-bottom:20px;}
+  .lede b{color:var(--sage-deep);}
+
+  .sec{margin-bottom:18px;}
+  .sec-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sage-deep);font-weight:700;margin-bottom:9px;display:flex;align-items:center;gap:8px;}
+  .sec-label::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* Proof strip */
+  .proof{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;}
+  .proof div{background:var(--card);padding:11px 12px;}
+  .proof .n{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;color:var(--gold);line-height:1;}
+  .proof .l{font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-top:5px;font-weight:600;}
+  .mix{font-size:11px;color:var(--ink-soft);margin-top:9px;}
+  .mix b{color:var(--ink);}
+  .takeaway{font-size:12px;color:var(--ink-soft);margin-top:9px;border-left:3px solid var(--gold);padding-left:11px;}
+  .takeaway b{color:var(--ink);}
+
+  /* Two column */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .body-txt{font-size:12px;color:var(--ink-soft);}
+  .body-txt b{color:var(--ink);}
+  .yield-num{font-family:'Playfair Display',serif;font-weight:700;color:var(--sage-deep);}
+
+  /* bring/get */
+  .bg-card{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:12px 14px;}
+  .bg-card h4{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+  .bg-card p{font-size:11.5px;color:var(--ink-soft);}
+  .bg-card p b{color:var(--ink);}
+
+  /* funds table */
+  table{width:100%;border-collapse:collapse;font-size:11.5px;}
+  th{text-align:left;font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 0 6px;border-bottom:1.5px solid var(--line);}
+  th.amt,td.amt{text-align:right;}
+  td{padding:6px 0;border-bottom:1px solid var(--line);color:var(--ink-soft);}
+  td b{color:var(--ink);}
+  td.amt{font-weight:700;color:var(--sage-deep);white-space:nowrap;}
+  tr.total td{border-bottom:none;border-top:2px solid var(--ink);padding-top:8px;font-weight:700;color:var(--ink);}
+  tr.total td.amt{color:var(--gold);font-family:'Playfair Display',serif;font-size:14px;}
+  .note{font-size:10.5px;color:var(--muted);margin-top:8px;font-style:italic;}
+
+  /* phases */
+  .phase{display:flex;gap:12px;margin-bottom:10px;}
+  .phase .pin{flex:0 0 auto;width:62px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gold);padding-top:1px;}
+  .phase .pt{font-size:11.5px;color:var(--ink-soft);}
+  .phase .pt b{color:var(--ink);}
+
+  ul.tight{list-style:none;}
+  ul.tight li{font-size:11.5px;color:var(--ink-soft);padding-left:16px;position:relative;margin-bottom:6px;}
+  ul.tight li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;background:var(--sage);border-radius:1px;}
+  ul.tight li b{color:var(--ink);}
+
+  .why{background:linear-gradient(135deg,#20251c,#2c3326);color:#e9e6d8;border-radius:6px;padding:16px 18px;}
+  .why h4{font-family:'Playfair Display',serif;font-weight:700;color:var(--gold-soft);font-size:15px;margin-bottom:8px;}
+  .why p{font-size:11.5px;color:#cfccbc;}
+  .why p b{color:#fff;}
+
+  footer{margin-top:18px;border-top:1.5px solid var(--line);padding-top:12px;display:flex;justify-content:space-between;align-items:center;}
+  .cta{font-size:12px;color:var(--ink);}
+  .cta b{color:var(--sage-deep);}
+  .contact{text-align:right;font-size:10.5px;color:var(--muted);line-height:1.7;}
+  .contact b{color:var(--ink);}
+
+  @media print{
+    body{background:#fff;padding:0;}
+    .sheet{box-shadow:none;width:auto;padding:14mm 14mm;}
+    @page{size:A4;margin:0;}
+  }
+  @media(max-width:760px){
+    .two{grid-template-columns:1fr;gap:16px;}
+    .proof{grid-template-columns:repeat(2,1fr);}
+    .sheet{padding:14mm 7mm;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div>
+      <div class="wordmark">pakida<span class="dot">.</span></div>
+      <div class="subline">Board Game Cafe · Trivandrum</div>
+    </div>
+    <div class="doc-tag">
+      <strong>Partnership Proposal</strong>
+      Private &amp; Confidential<br>Prepared for review
+    </div>
+  </header>
+
+  <h1 class="thesis">We've proven people want to put the phone down and sit at the same table. Now we give the idea a space worthy of it.</h1>
+  <p class="lede">Digital life has made everyone more connected and more alone. Pakida uses board games as the medium to pull people back together — IT teams unwinding, families across generations, friends reconnecting. <b>The demand is already validated.</b> What's capped is the yield — by a hidden 4th-floor location and no capital behind it. That gap is exactly where you come in.</p>
+
+  <div class="sec">
+    <div class="sec-label">The Proof — 100% organic, zero marketing spend</div>
+    <div class="proof">
+      <div><div class="n">₹45k</div><div class="l">Avg monthly revenue</div></div>
+      <div><div class="n">15–30</div><div class="l">Player-hours / day</div></div>
+      <div><div class="n">4.8★</div><div class="l">93 verified reviews</div></div>
+      <div><div class="n">₹0</div><div class="l">Spent on marketing</div></div>
+    </div>
+    <p class="mix">Customer mix: <b>50% IT professionals · 30% families · 15% students · 5% niche communities</b> — every one acquired by word of mouth.</p>
+    <p class="takeaway"><b>The read:</b> Demand is real and multi-segment. Revenue is suppressed by four fixable constraints — 4th-floor invisibility, zero marketing, no corporate channel, and under-equipped F&amp;B. Each one is solved with capital and a visible address.</p>
+  </div>
+
+  <div class="sec two">
+    <div>
+      <div class="sec-label">The Yield Logic</div>
+      <p class="body-txt">Today Pakida earns roughly <b>₹30 per sq ft / month</b> across 1,500 sq ft — viable only because a 4th floor is cheap. Corridor commercial space rents at <b>₹43–60/sq ft</b>, so the current footprint isn't where this model belongs.</p>
+      <p class="body-txt" style="margin-top:9px;">On a visible ground floor, with the four constraints removed, a player-hour model targets <span class="yield-num">₹120–150/sq ft</span> <span style="font-size:10px;color:var(--muted);">(projected)</span>. That is the difference between a cheap-space cafe and a <b>destination asset</b> — turning square footage into yield, which is precisely your business.</p>
+    </div>
+    <div>
+      <div class="sec-label">The Proposal — A Partnership, Not a Tenancy</div>
+      <div class="bg-card" style="margin-bottom:10px;">
+        <h4>You Bring</h4>
+        <p>A <b>visible ground-floor space</b> (your core strength + existing inventory) and <b>₹18L conversion &amp; launch capital.</b></p>
+      </div>
+      <div class="bg-card">
+        <h4>We Bring</h4>
+        <p>A <b>proven concept</b>, a 70+ curated game library (a 2–3× import-cost moat), tested operating systems, and an existing community.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec two">
+    <div>
+      <div class="sec-label">Conversion &amp; Launch Capital — ₹18L</div>
+      <table>
+        <thead><tr><th>Deployment</th><th class="amt">₹ Lakh</th></tr></thead>
+        <tbody>
+          <tr><td><b>Interior fit-out &amp; spatial design</b><br><span style="font-size:10px;color:var(--muted);">focused table lighting, spacing, build-out</span></td><td class="amt">4.5</td></tr>
+          <tr><td><b>F&amp;B upgrade + espresso machine</b><br><span style="font-size:10px;color:var(--muted);">premium beverages lift margin to ~75%</span></td><td class="amt">3.0</td></tr>
+          <tr><td><b>Entry pool table + experiential add-ons</b><br><span style="font-size:10px;color:var(--muted);">monetises the waiting zone</span></td><td class="amt">3.0</td></tr>
+          <tr><td><b>Marketing + B2B corporate launch</b></td><td class="amt">2.5</td></tr>
+          <tr><td><b>Staffing, inventory &amp; utility deposits</b></td><td class="amt">2.0</td></tr>
+          <tr><td><b>Game library expansion</b></td><td class="amt">1.5</td></tr>
+          <tr><td><b>Exterior signage &amp; glass-wall branding</b></td><td class="amt">1.5</td></tr>
+          <tr class="total"><td>Total conversion capital</td><td class="amt">18.0</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Hookah space deliberately excluded. Central COTPA rules ban any service inside a smoking zone, and states are moving to outright criminal bans — we protect the F&amp;B licence and your capital by staying clear, and redirect those funds into yield-positive assets.</p>
+    </div>
+
+    <div>
+      <div class="sec-label">Structure — Proof-Gated</div>
+      <div class="phase"><div class="pin">Phase 1<br>Mo. 1–6</div><div class="pt">Fit out and launch the ground-floor unit. Track <b>player-hours/day, average transaction value, repeat-visit rate, monthly revenue</b> against jointly agreed targets.</div></div>
+      <div class="phase"><div class="pin">Trigger</div><div class="pt">On hitting targets, the ₹18L <b>converts to defined equity</b> in the Pakida operating entity — locking the scale partnership with downside capped until the model is proven.</div></div>
+      <div class="phase"><div class="pin">Phase 2<br>Scale</div><div class="pt">Replicate the proven unit across your properties; activate corporate B2B and licensed-venue operations.</div></div>
+      <p class="note">Targets and equity terms illustrative — to be finalised with your CA / legal counsel.</p>
+
+      <div class="sec-label" style="margin-top:14px;">The Upside Verticals</div>
+      <ul class="tight">
+        <li><b>Corporate B2B:</b> 70,000+ Technopark professionals; structured team-building runs 4–6× walk-in value.</li>
+        <li><b>Community IPs:</b> Strangers Friday, Taco Tuesday, D&amp;D Sundays — recurring, low-CAC, high-retention.</li>
+        <li><b>Licensed-venue operator:</b> Pakida runs the gaming/social layer inside FL-3 hotels or FL-4C IT-park lounges — alcohol revenue without holding the licence. Your <b>Akkulam tourist-zone property</b> is the rare site that qualifies for a standalone beer/wine (FL-11) licence; you've already solved the hardest part.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="why">
+    <h4>Why You, Specifically</h4>
+    <p>You build and rent visible commercial space — the exact constraint throttling Pakida's growth. You visited, and your instincts were right: <b>focused table lighting, better spacing, a pool table at the entry, a lean multi-role kitchen hire</b> — all now built into this plan. Your Akkulam booking opens the licensed-entertainment path. This isn't a cafe hunting for a landlord. It's a proven concept seeking the one partner whose strengths are our exact gaps.</p>
+  </div>
+
+  <footer>
+    <div class="cta">Proposed next step: a <b>30-minute working session</b> to align on space, targets, and structure.</div>
+    <div class="contact">
+      <b>Ashin &amp; Astrin Entertainments LLP</b><br>
+      pakida.tvm@gmail.com · +91 85471 83423<br>
+      @pakida.tvm
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
